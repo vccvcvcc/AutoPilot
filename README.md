@@ -1,15 +1,9 @@
-# AutoPilot for AnyRPGCore
+﻿# AutoPilot Framework
 
-This folder contains a lightweight AutoPilot bootstrap for AnyRPGCore.
+Unityゲームに後付けできる**汎用の自動プレイ(ボット)フレームワーク**。
+ポート&アダプタ設計により、コアはゲームを一切参照せず、ゲームごとに薄いアダプタを
+書くだけで自動プレイを実現する。外部AIエージェントがゲームの実行・結果確認・コード修正を
+無人で反復する**自律実行ループ**も同梱する。
 
-## How to use
-
-1. Open the AnyRPGCore Unity project.
-2. In the editor, select Tools > AutoPilot > Enable On Play.
-3. Enter Play mode.
-4. The bot will start in the background and write a report under AutoPilotBridge/Reports/.
-
-## Notes
-
-- The current adapter is intentionally minimal and uses a simple phase detector plus a looped test-play stub.
-- For a real automated test loop, the adapter should be replaced with AnyRPG-specific sensors and interactions.
+このリポジトリは Unity Package Manager (UPM) パッケージで、ゲーム固有の依存を持たず、
+任意の Unity プロジェクトへ追加して利用できます。

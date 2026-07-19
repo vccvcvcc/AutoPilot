@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.IO;
 using AutoPilot.Core;
 using AutoPilot.InputSim;
@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace AutoPilot.Adapter
 {
-	public static class AnyRPGAutoPilotAdapter
+	public static class SmokeTestAdapter
 	{
 		private static BotRunner _runner;
 
@@ -22,10 +22,10 @@ namespace AutoPilot.Adapter
 			_runner.Context.Blackboard.Set(Keys.Phase, NormalizedPhase.Boot);
 			_runner.Context.Blackboard.Set(Keys.PlayerExists, true);
 			_runner.Context.Blackboard.Set(Keys.PlayerPosition, Vector3.zero);
-			_runner.Context.Log.Info("AutoPilot booted for AnyRPGCore");
+			_runner.Context.Log.Info("AutoPilot booted for smoke test");
 
-			_runner.Sensors.Add(new AnyRPGPhaseSensor());
-			_runner.Sensors.Add(new AnyRPGMovementSensor());
+			_runner.Sensors.Add(new SmokeTestPhaseSensor());
+			_runner.Sensors.Add(new SmokeTestMovementSensor());
 			string sessionId = GetSessionId();
 			string reportPath = Path.GetFullPath(Path.Combine(Application.dataPath, "..", AutoPilotHandshake.BridgeDirName, "Reports", $"report_{sessionId}.json"));
 			_runner.Sensors.Add(new BotReporter(reportPath, sessionId, _runner.Context.Log));
@@ -78,7 +78,7 @@ namespace AutoPilot.Adapter
 		}
 	}
 
-	public sealed class AnyRPGPhaseSensor : ISensor
+	public sealed class SmokeTestPhaseSensor : ISensor
 	{
 		public void Tick(Blackboard blackboard)
 		{
@@ -94,7 +94,7 @@ namespace AutoPilot.Adapter
 		}
 	}
 
-	public sealed class AnyRPGMovementSensor : ISensor
+	public sealed class SmokeTestMovementSensor : ISensor
 	{
 		public void Tick(Blackboard blackboard)
 		{
