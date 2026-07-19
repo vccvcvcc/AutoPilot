@@ -139,7 +139,7 @@ AutoPilotBridge/Reports/       BotReporterが書くセッションレポート
 
 ## ライセンス
 
-未設定。GitHub公開前に任意のライセンス(MIT等)を選んで `LICENSE` を追加すること。
+Apache License 2.0([LICENSE](LICENSE))。
 
 ## メタファイルについて
 
