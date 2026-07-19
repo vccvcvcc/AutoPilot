@@ -1,30 +1,57 @@
-using System;
-
 namespace AutoPilot.Core
 {
-	public enum BotTaskStatus
+	public enum BotStatus
 	{
 		Running,
 		Success,
-		Failure
+		Failure,
 	}
 
+	/// <summary>
+	/// 毎フレームTickされる協調型タスクの基底。
+	/// Tick外部からの中断はCancel()で行い、OnStopで必ず後始末(入力の解放等)をする。
+	/// </summary>
 	public abstract class BotTask
 	{
-		public virtual void OnStart(BotContext ctx) { }
-		public abstract BotTaskStatus OnTick(BotContext ctx);
-		public virtual void OnStop(BotContext ctx, BotTaskStatus status) { }
-		public virtual void Cancel(BotContext ctx) { }
-	}
+		public string Name { get; protected set; }
 
-	public sealed class DoTask : BotTask
-	{
-		private readonly Action<BotContext> _action;
-		public DoTask(Action<BotContext> action) => _action = action;
-		public override BotTaskStatus OnTick(BotContext ctx)
+		private bool _running;
+
+		protected BotTask()
 		{
-			_action?.Invoke(ctx);
-			return BotTaskStatus.Success;
+			Name = GetType().Name;
 		}
+
+		public BotStatus Tick(BotContext ctx)
+		{
+			if (!_running)
+			{
+				_running = true;
+				OnStart(ctx);
+			}
+
+			BotStatus status = OnTick(ctx);
+
+			if (status != BotStatus.Running)
+			{
+				_running = false;
+				OnStop(ctx, status);
+			}
+			return status;
+		}
+
+		/// <summary>実行途中のタスクを中断する。未実行なら何もしない。</summary>
+		public void Cancel(BotContext ctx)
+		{
+			if (_running)
+			{
+				_running = false;
+				OnStop(ctx, BotStatus.Failure);
+			}
+		}
+
+		protected virtual void OnStart(BotContext ctx) { }
+		protected abstract BotStatus OnTick(BotContext ctx);
+		protected virtual void OnStop(BotContext ctx, BotStatus status) { }
 	}
 }

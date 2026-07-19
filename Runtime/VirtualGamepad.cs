@@ -1,12 +1,17 @@
 using System;
 using System.Collections.Generic;
-using AutoPilot.Core;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.LowLevel;
+using AutoPilot.Core;
 
 namespace AutoPilot.InputSim
 {
+	/// <summary>
+	/// Input Systemに仮想Gamepadデバイスを追加し、状態イベント(QueueStateEvent)で擬似入力を注入する。
+	/// 実機パッドと同じ経路(バインディング解決・ActionMapの有効/無効・UI入力モジュール)を通るため、
+	/// ゲーム側のコードを変更せずに、プレイヤー操作と等価な入力検証ができる。
+	/// </summary>
 	public sealed class VirtualGamepad : IVirtualController, IDisposable
 	{
 		private Gamepad _device;
@@ -88,7 +93,7 @@ namespace AutoPilot.InputSim
 					return;
 			}
 
-			var mapped = Map(button);
+			GamepadButton mapped = Map(button);
 			if (down)
 				_pressed.Add(mapped);
 			else
@@ -99,6 +104,7 @@ namespace AutoPilot.InputSim
 		{
 			if (_device == null || !_device.added)
 				return;
+
 			var state = new GamepadState
 			{
 				leftStick = _leftStick,
@@ -106,8 +112,9 @@ namespace AutoPilot.InputSim
 				leftTrigger = _leftTrigger,
 				rightTrigger = _rightTrigger,
 			};
-			foreach (var button in _pressed)
+			foreach (GamepadButton button in _pressed)
 				state = state.WithButton(button);
+
 			InputSystem.QueueStateEvent(_device, state);
 		}
 
