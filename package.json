@@ -1,0 +1,28 @@
+{
+  "name": "com.nobu.autopilot",
+  "version": "0.1.0",
+  "displayName": "AutoPilot Framework",
+  "description": "Unityゲームに後付けできる汎用自動プレイ(ボット)フレームワーク。ポート&アダプタ設計で、ゲームごとに薄いアダプタを書くだけで自動プレイを実現する。仮想Gamepadによるデバイスレベル入力注入、Blackboard観測、フェーズ別ハンドラFSM、外部エージェント連携の自律実行ループを含む。",
+  "unity": "2020.3",
+  "keywords": [
+    "automation",
+    "testing",
+    "qa",
+    "bot",
+    "autoplay",
+    "input-system"
+  ],
+  "author": {
+    "name": "nobu"
+  },
+  "dependencies": {
+    "com.unity.inputsystem": "1.0.2"
+  },
+  "samples": [
+    {
+      "displayName": "Smoke Test Adapter",
+      "description": "仮想Gamepadの入力注入とBotRunnerの起動を最小構成で確認するサンプルアダプタ。",
+      "path": "Samples~/SmokeTest"
+    }
+  ]
+}

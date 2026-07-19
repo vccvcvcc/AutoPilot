@@ -1,0 +1,21 @@
+# Unity が生成するメタ以外の成果物(パッケージ本体は .cs / .asmdef / .meta を追跡する)
+# このリポジトリはUPMパッケージ単体なので、消費側プロジェクトの生成物は含まれない。
+
+# OS / エディタ
+.DS_Store
+Thumbs.db
+*.swp
+*~
+
+# Rider / VS
+.idea/
+.vs/
+*.csproj
+*.sln
+*.user
+
+# ビルド一時物
+/Temp/
+/obj/
+/Library/
+/Logs/
