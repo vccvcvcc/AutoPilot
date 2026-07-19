@@ -18,7 +18,7 @@ namespace AutoPilot.Adapter
 				return;
 
 			Application.runInBackground = true;
-			_runner = BotRunner.Create(new VirtualGamepad(), "AnyRPGAutoPilot");
+			_runner = BotRunner.Create(new VirtualGamepad(), "AutoPilot");
 			_runner.Context.Blackboard.Set(Keys.Phase, NormalizedPhase.Boot);
 			_runner.Context.Blackboard.Set(Keys.PlayerExists, true);
 			_runner.Context.Blackboard.Set(Keys.PlayerPosition, Vector3.zero);
