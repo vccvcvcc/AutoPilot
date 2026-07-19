@@ -5,7 +5,8 @@
 .DS_Store
 Thumbs.db
 *.swp
-*~
+# 注: `*~` は使わない。UPM の Documentation~ / Samples~ フォルダまで無視してしまうため。
+*.bak
 
 # Rider / VS
 .idea/
