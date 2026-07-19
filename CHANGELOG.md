@@ -5,6 +5,15 @@
 ## [Unreleased]
 
 ### Fixed
+- 前回の重複解消で `AutoPilot.Core`/`AutoPilot.InputSim`/`AutoPilot.Nav` の3つの.asmdefを
+  `Runtime/` 直下に同居させてしまっていた。Unityはフォルダ単位でアセンブリの所有権を
+  決めるため、同一フォルダに複数の.asmdefがあるとどのC#ファイルがどのアセンブリに
+  属すか判別できない(特に `Unity.InputSystem` 参照が必要な `VirtualGamepad.cs` が
+  無関係の `AutoPilot.Core.asmdef` 側に巻き込まれると型解決エラーになる)。
+  `AutoPilot.InputSim.asmdef`+`VirtualGamepad.cs` を `Runtime/InputSim/` へ、
+  `AutoPilot.Nav.asmdef`+`NavigateTo.cs`+`Steering.cs` を `Runtime/Nav/` へ
+  (.metaごと`git mv`でGUIDを保持したまま)移動し、フォルダごとに.asmdefが1つになるよう戻した。
+  `AutoPilot.Core.asmdef` は他に同居するアセンブリが無くなったため `Runtime/` 直下のままでよい。
 - `Runtime/Core`・`Runtime/InputSim`・`Runtime/Nav` 配下に旧構成のファイルが残っており、
   フラット化後の `Runtime/*.cs` と同名クラス・同名アセンブリ(`AutoPilot.Core`/
   `AutoPilot.InputSim`)が二重定義される状態だった(Unity取り込み時にアセンブリ名衝突で
